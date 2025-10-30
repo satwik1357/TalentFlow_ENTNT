@@ -4,50 +4,51 @@ import path from 'path';
 import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  
   css: {
     postcss: {
-      plugins: [
-        tailwindcss,
-        autoprefixer,
-      ],
+      plugins: [tailwindcss, autoprefixer],
     },
   },
+
   server: {
     host: '::',
     port: 3000,
-    open: true
+    open: true,
   },
+
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
+      '@': path.resolve(__dirname, './src'),
     },
-    extensions: ['.js', '.jsx', '.json']
+    extensions: ['.js', '.jsx', '.json'],
   },
+
   optimizeDeps: {
     include: ['react-window'],
     esbuildOptions: {
-      target: 'es2020',
+      target: 'esnext', 
       loader: {
         '.js': 'jsx',
-        '.jsx': 'jsx'
-      }
-    }
+        '.jsx': 'jsx',
+      },
+    },
   },
+
   build: {
-    target: 'es2020',
+    target: 'esnext', 
     rollupOptions: {
       input: {
-        main: path.resolve(__dirname, 'index.html')
+        main: path.resolve(__dirname, 'index.html'),
       },
       output: {
         manualChunks: {
           react: ['react', 'react-dom', 'react-router-dom'],
-          ui: ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu']
-        }
-      }
-    }
-  }
+          ui: ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu'],
+        },
+      },
+    },
+  },
 });
