@@ -1,0 +1,9 @@
+/* Test CSS */
+.test-class {
+  color: red;
+  font-size: 24px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

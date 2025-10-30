@@ -1,0 +1,242 @@
+[
+  {
+    "title": "Software Engineer Assessment",
+    "description": "Evaluate technical skills for software engineering roles.",
+    "jobId": "job-1",
+    "status": "active",
+    "questions": [
+      {
+        "type": "single-choice",
+        "question": "What is the time complexity of binary search?",
+        "options": ["O(1)", "O(log n)", "O(n)", "O(n^2)"],
+        "correctAnswer": "O(log n)"
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Which of the following are programming paradigms? (Select all that apply)",
+        "options": ["Object-Oriented", "Functional", "Procedural", "Imperative"],
+        "correctAnswers": ["Object-Oriented", "Functional", "Procedural", "Imperative"]
+      },
+      {
+        "type": "short-answer",
+        "question": "Explain what a RESTful API is in one sentence."
+      },
+      {
+        "type": "long-answer",
+        "question": "Describe the differences between SQL and NoSQL databases."
+      },
+      {
+        "type": "single-choice",
+        "question": "Which keyword is used to define a class in JavaScript?",
+        "options": ["function", "class", "var", "let"],
+        "correctAnswer": "class"
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Which data structures are linear? (Select all that apply)",
+        "options": ["Array", "Stack", "Queue", "Tree"],
+        "correctAnswers": ["Array", "Stack", "Queue"]
+      },
+      {
+        "type": "short-answer",
+        "question": "What does CSS stand for?"
+      },
+      {
+        "type": "long-answer",
+        "question": "How would you optimize a slow database query?"
+      },
+      {
+        "type": "single-choice",
+        "question": "What is the purpose of the 'useEffect' hook in React?",
+        "options": ["To manage state", "To handle side effects", "To render components", "To define props"],
+        "correctAnswer": "To handle side effects"
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Which of these are version control systems? (Select all that apply)",
+        "options": ["Git", "SVN", "Mercurial", "Docker"],
+        "correctAnswers": ["Git", "SVN", "Mercurial"]
+      }
+    ]
+  },
+  {
+    "title": "Data Analyst Assessment",
+    "description": "Assess analytical and data handling skills.",
+    "jobId": "job-2",
+    "status": "active",
+    "questions": [
+      {
+        "type": "single-choice",
+        "question": "What does SQL stand for?",
+        "options": ["Structured Query Language", "Simple Query Language", "Standard Query Logic", "System Query Language"],
+        "correctAnswer": "Structured Query Language"
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Which tools are commonly used for data visualization? (Select all that apply)",
+        "options": ["Tableau", "Excel", "Python", "Word"],
+        "correctAnswers": ["Tableau", "Excel", "Python"]
+      },
+      {
+        "type": "short-answer",
+        "question": "Define 'data normalization' briefly."
+      },
+      {
+        "type": "long-answer",
+        "question": "Explain the steps involved in the data cleaning process."
+      },
+      {
+        "type": "single-choice",
+        "question": "Which statistical measure indicates the central tendency?",
+        "options": ["Mean", "Variance", "Range", "Standard Deviation"],
+        "correctAnswer": "Mean"
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Which of these are types of machine learning? (Select all that apply)",
+        "options": ["Supervised", "Unsupervised", "Reinforcement", "Descriptive"],
+        "correctAnswers": ["Supervised", "Unsupervised", "Reinforcement"]
+      },
+      {
+        "type": "short-answer",
+        "question": "What is a pivot table used for?"
+      },
+      {
+        "type": "long-answer",
+        "question": "Describe how you would handle missing data in a dataset."
+      },
+      {
+        "type": "single-choice",
+        "question": "What is the primary function of ETL?",
+        "options": ["Extract, Transform, Load", "Edit, Test, Launch", "Evaluate, Train, Learn", "Execute, Transfer, Log"],
+        "correctAnswer": "Extract, Transform, Load"
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Which databases are relational? (Select all that apply)",
+        "options": ["MySQL", "MongoDB", "PostgreSQL", "Redis"],
+        "correctAnswers": ["MySQL", "PostgreSQL"]
+      }
+    ]
+  },
+  {
+    "title": "Marketing Specialist Assessment",
+    "description": "Evaluate marketing knowledge and strategy skills.",
+    "jobId": "job-3",
+    "status": "active",
+    "questions": [
+      {
+        "type": "single-choice",
+        "question": "What is the primary goal of SEO?",
+        "options": ["Increase website traffic", "Sell products", "Create content", "Manage ads"],
+        "correctAnswer": "Increase website traffic"
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Which are digital marketing channels? (Select all that apply)",
+        "options": ["Social Media", "Email", "Print Ads", "TV"],
+        "correctAnswers": ["Social Media", "Email"]
+      },
+      {
+        "type": "short-answer",
+        "question": "What does KPI stand for in marketing?"
+      },
+      {
+        "type": "long-answer",
+        "question": "Describe the AIDA model in marketing."
+      },
+      {
+        "type": "single-choice",
+        "question": "Which metric measures engagement on social media?",
+        "options": ["CTR", "Likes", "ROI", "CPA"],
+        "correctAnswer": "Likes"
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Which are components of a marketing mix? (Select all that apply)",
+        "options": ["Product", "Price", "Place", "People"],
+        "correctAnswers": ["Product", "Price", "Place"]
+      },
+      {
+        "type": "short-answer",
+        "question": "Explain what a brand persona is."
+      },
+      {
+        "type": "long-answer",
+        "question": "How would you plan a content marketing strategy?"
+      },
+      {
+        "type": "single-choice",
+        "question": "What is the purpose of A/B testing?",
+        "options": ["Compare versions", "Track sales", "Analyze competitors", "Create reports"],
+        "correctAnswer": "Compare versions"
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Which platforms are used for paid advertising? (Select all that apply)",
+        "options": ["Google Ads", "Facebook Ads", "Instagram", "LinkedIn"],
+        "correctAnswers": ["Google Ads", "Facebook Ads", "LinkedIn"]
+      }
+    ]
+  },
+  {
+    "title": "Project Manager Assessment",
+    "description": "Assess project management and leadership skills.",
+    "jobId": "job-4",
+    "status": "active",
+    "questions": [
+      {
+        "type": "single-choice",
+        "question": "What does PMO stand for?",
+        "options": ["Project Management Office", "Product Marketing Office", "Process Monitoring Office", "Performance Measurement Office"],
+        "correctAnswer": "Project Management Office"
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Which are Agile methodologies? (Select all that apply)",
+        "options": ["Scrum", "Kanban", "Waterfall", "Lean"],
+        "correctAnswers": ["Scrum", "Kanban", "Lean"]
+      },
+      {
+        "type": "short-answer",
+        "question": "Define 'scope creep' in project management."
+      },
+      {
+        "type": "long-answer",
+        "question": "Explain the key phases of the project life cycle."
+      },
+      {
+        "type": "single-choice",
+        "question": "Which tool is used for risk assessment?",
+        "options": ["SWOT Analysis", "Gantt Chart", "PERT Chart", "Mind Map"],
+        "correctAnswer": "SWOT Analysis"
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Which are stakeholder management techniques? (Select all that apply)",
+        "options": ["Communication Plan", "Power/Interest Grid", "Budgeting", "Scheduling"],
+        "correctAnswers": ["Communication Plan", "Power/Interest Grid"]
+      },
+      {
+        "type": "short-answer",
+        "question": "What is a milestone in project management?"
+      },
+      {
+        "type": "long-answer",
+        "question": "How do you handle project delays?"
+      },
+      {
+        "type": "single-choice",
+        "question": "What is the primary focus of PRINCE2?",
+        "options": ["Processes", "People", "Products", "Principles"],
+        "correctAnswer": "Processes"
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Which are project management certifications? (Select all that apply)",
+        "options": ["PMP", "CSM", "CAPM", "MBA"],
+        "correctAnswers": ["PMP", "CSM", "CAPM"]
+      }
+    ]
+  }
+]
