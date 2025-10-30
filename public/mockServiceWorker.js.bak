@@ -1,0 +1,227 @@
+/* eslint-disable */
+/* tslint:disable */
+
+/**
+ * Mock Service Worker (2.0.11).
+ * @see https://github.com/mswjs/msw
+ * - Please do NOT modify this file.
+ * - Please do NOT serve this file on production.
+ */
+
+const INTEGRITY_CHECKSUM = 'ca227148915091eda5f7cfc0301483c9'
+const IS_MOCKED_RESPONSE = Symbol('isMockedResponse')
+const activeClientIds = new Set()
+
+self.addEventListener('install', function () {
+  self.skipWaiting()
+})
+
+self.addEventListener('activate', function (event) {
+  event.waitUntil(self.clients.claim())
+})
+
+self.addEventListener('message', async function (event) {
+  const clientId = event.source.id
+
+  if (!clientId || !event.data) {
+    return
+  }
+
+  const allClients = await self.clients.matchAll({
+    type: 'window',
+  })
+
+  switch (event.data) {
+    case 'KEEPALIVE_REQUEST': {
+      sendToClient(clientId, {
+        type: 'KEEPALIVE_RESPONSE',
+      })
+      break
+    }
+
+    case 'INTEGRITY_CHECK_REQUEST': {
+      sendToClient(clientId, {
+        type: 'INTEGRITY_CHECK_RESPONSE',
+        payload: INTEGRITY_CHECKSUM,
+      })
+      break
+    }
+
+    case 'MOCK_ACTIVATE': {
+      activeClientIds.add(clientId)
+
+      sendToClient(clientId, {
+        type: 'MOCKING_ENABLED',
+        payload: true,
+      })
+      break
+    }
+
+    case 'MOCK_DEACTIVATE': {
+      activeClientIds.delete(clientId)
+      break
+    }
+
+    case 'CLIENT_CLOSED': {
+      activeClientIds.delete(clientId)
+
+      const remainingClients = allClients.filter((client) => {
+        return client.id !== clientId
+      })
+
+      // Unregister itself when there are no more clients
+      if (remainingClients.length === 0) {
+        self.registration.unregister()
+      }
+
+      break
+    }
+  }
+})
+
+self.addEventListener('fetch', function (event) {
+  const { request } = event
+
+  // Bypass server-sent events.
+  if (request.cache === 'only-if-cached' && request.mode !== 'same-origin') {
+    return
+  }
+
+  // Bypass navigation requests.
+  if (request.mode === 'navigate') {
+    return
+  }
+
+  // Opening the DevTools triggers the "only-if-cached" request
+  // that cannot be handled by the worker. Bypass such requests.
+  if (request.cache === 'only-if-cached' && request.mode !== 'same-origin') {
+    return
+  }
+
+  // Bypass all requests when there are no active clients.
+  // Prevents the self-unregistered worked from handling requests
+  // after it's been deleted (still remains active until the next reload).
+  if (activeClientIds.size === 0) {
+    return
+  }
+
+  // Generate unique request ID.
+  const requestId = crypto.randomUUID()
+
+  event.respondWith(
+    handleRequest(event, requestId).catch((error) => {
+      if (error.name === 'NetworkError') {
+        console.warn(
+          '[MSW] Successfully emulated a network error for the "%s %s" request.',
+          request.method,
+          request.url,
+        )
+        return
+      }
+
+      // At this point, any exception indicates an issue with the original request/response.
+      console.error(
+        `\
+[MSW] Caught an exception from the "%s %s" request (%s). This is probably not a problem with Mock Service Worker. There is likely an additional logging output above.`,
+        request.method,
+        request.url,
+        `${error.name}: ${error.message}`,
+      )
+    }),
+  )
+})
+
+async function handleRequest(event, requestId) {
+  const client = await event.target.clients.get(event.clientId)
+
+  if (!client) {
+    return passthrough(event.request)
+  }
+
+  const requestClone = event.request.clone()
+
+  function passthrough(request) {
+    const headers = Object.fromEntries(request.headers.entries())
+
+    // Remove internal MSW headers from the passthrough request.
+    delete headers['x-msw-intention']
+
+    return fetch(request, { headers })
+  }
+
+  sendToClient(
+    client.id,
+    {
+      type: 'REQUEST',
+      payload: {
+        id: requestId,
+        url: requestClone.url,
+        mode: requestClone.mode,
+        method: requestClone.method,
+        headers: Object.fromEntries(requestClone.headers.entries()),
+        cache: requestClone.cache,
+        credentials: requestClone.credentials,
+        destination: requestClone.destination,
+        integrity: requestClone.integrity,
+        redirect: requestClone.redirect,
+        referrer: requestClone.referrer,
+        referrerPolicy: requestClone.referrerPolicy,
+        body: await requestClone.text(),
+        keepalive: requestClone.keepalive,
+      },
+    },
+    // Resolve this promise when the response from the client is received.
+    [
+      new Promise((resolve, reject) => {
+        setTimeout(() => {
+          reject(new Error('Response timeout'))
+        }, 30000)
+
+        function listener(event) {
+          if (!event.data || event.data.type !== 'RESPONSE') {
+            return
+          }
+
+          if (event.data.payload.id !== requestId) {
+            return
+          }
+
+          self.removeEventListener('message', listener)
+          resolve(event.data.payload)
+        }
+
+        self.addEventListener('message', listener)
+      }),
+    ],
+  )
+
+  const responsePromise = await event.preloadResponse
+  const response = responsePromise ? responsePromise : await passthrough(event.request)
+
+  return response
+}
+
+function sendToClient(clientId, message, transferables = []) {
+  return new Promise((resolve, reject) => {
+    const channel = new MessageChannel()
+
+    channel.port1.onmessage = (event) => {
+      if (event.data && event.data.error) {
+        return reject(event.data.error)
+      }
+
+      resolve(event.data)
+    }
+
+    self.clients
+      .get(clientId)
+      .then((client) => {
+        if (!client) {
+          return reject(new Error(`Failed to resolve client by ID: ${clientId}`))
+        }
+
+        client.postMessage(message, [channel.port2].concat(transferables))
+      })
+      .catch(reject)
+  })
+}
